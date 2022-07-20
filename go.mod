@@ -1,3 +1,3 @@
-module github.com/manuphatak/jira_branch
+module github.com/manuphatak/jira-branch
 
 go 1.18
