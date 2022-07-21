@@ -20,5 +20,6 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release --rm-dist
+          go-version: ">=1.18.4"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
