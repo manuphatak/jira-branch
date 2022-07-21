@@ -34,7 +34,18 @@ func main() {
 	password := os.Getenv("JIRA_API_KEY")
 
 	if username == "" || password == "" {
-		log.Fatal("Set JIRA_USERNAME and JIRA_API_KEY")
+		fmt.Println(`Usage: jira-branch <url>
+
+Welcome to jira-branch.
+
+This tool will help you to create great branch names for your JIRA tickets!
+
+You need to set the following environment variables:
+- JIRA_USERNAME
+- JIRA_API_KEY
+
+An API key can be created by navigating to https://id.atlassian.com/manage-profile/security/api-tokens.`)
+		os.Exit(1)
 	}
 
 	url := os.Args[1]
@@ -64,13 +75,11 @@ func main() {
 		regexp.MustCompile(`(?m)\W+`).ReplaceAllString(strings.ToLower(issue.Fields.Summary), "_"),
 	)
 
-	stdout, err := exec.Command("git", "checkout", branchName).CombinedOutput()
-	if err != nil {
+	if stdout, err := exec.Command("git", "checkout", branchName).CombinedOutput(); err == nil {
+		fmt.Print(string(stdout))
+	} else {
 		stdout, err = exec.Command("git", "checkout", "-b", branchName).CombinedOutput()
 		check(err)
-		fmt.Print(string(stdout))
-
-	} else {
 		fmt.Print(string(stdout))
 	}
 }
