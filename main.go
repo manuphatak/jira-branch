@@ -72,7 +72,12 @@ An API key can be created by navigating to https://id.atlassian.com/manage-profi
 	branchName := fmt.Sprintf(
 		"%s/%s",
 		issue.Key,
-		regexp.MustCompile(`(?m)\W+`).ReplaceAllString(strings.ToLower(issue.Fields.Summary), "_"),
+		strings.ReplaceAll(
+			strings.TrimSpace(
+				regexp.MustCompile(`(?m)\W+`).ReplaceAllString(strings.ToLower(issue.Fields.Summary), " "),
+			),
+			" ", "_",
+		),
 	)
 
 	if stdout, err := exec.Command("git", "checkout", branchName).CombinedOutput(); err == nil {
