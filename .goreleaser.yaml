@@ -28,7 +28,7 @@ changelog:
 brews:
   - tap:
       owner: manuphatak
-      name: homebrew-jira-branch
+      name: homebrew-tap
     homepage: "https://github.com/manuphatak/jira-branch"
     description: "Create a jira branch for a ticket"
     license: "MIT"
